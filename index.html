@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Do Not Open</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="desktop">
+        <div class="countdown" id="countdown"></div>
+        <div class="files">
+            <div class="file" data-file="update_1">
+                <img src="folder_icon-removebg-preview.png" alt="update_1 icon">
+                <div class="file-name">update_1</div>
+            </div>
+            <div class="file" id="file_1" data-file="update_1">
+                <img src="folder_icon-removebg-preview.png" alt="update_1 icon">
+                <div class="file-name">update_1</div>
+            </div>
+        </div>
+        <div class="sidebar">
+            <div class="item">
+                <!-- <img src="path/to/recordings_icon.png" alt="recordings icon"> -->
+                recordings
+            </div>
+            <div class="item">
+                <!-- <img src="path/to/week3_icon.png" alt="week 3 icon"> -->
+                week 3
+            </div>
+            <div class="item">
+                <!-- <img src="path/to/irl_icon.png" alt="irl icon"> -->
+                irl
+            </div>
+            <div class="item">
+                <!-- <img src="path/to/past_weeks_icon.png" alt="past weeks icon"> -->
+                past weeks
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="modal">
+        <div class="modal-content" id="modal-content">
+            <span class="close-button" id="close-button">&times;</span>
+            <div id="password-section">
+                <p>Enter password to view the file:</p>
+                <input type="password" id="password" placeholder="Password">
+                <button id="submit-password">Submit</button>
+            </div>
+            <p id="file-content"></p>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/interact.js/1.10.11/interact.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
