@@ -30,8 +30,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const fileContent = document.getElementById("file-content");
     const passwordSection = document.getElementById("password-section");
 
-    const correctPassword = "yourpassword";
-    const encryptedText = "U2FsdGVkX1+vK3vZfW4UBwYVCe58N9Ywzfp4hz8cD4r1u0U2g3H/zFOD9lQzkQTR6m0ZZ7d1ek4UVg42mu2H5J6U2ZOM/dG5WzfgD5S/7yF/QkwUPBwnphz+niUgjrtV6U0B4n/l0j/L3lgH8tQ5Onvl7zzCpC+otV5XW5z8L8wD/E8vH6ZV5U3K7fG9m5QXy1OxW3P8kYd5U6n9/x5XG8n1/V7T4m8oD5hV9n8QZ4W5f2U7b9V7yR5P1y8F7zQ6X5xZ5vU3o5j5G1w9X5t6W5g1q9X5h8L5yQ8";
+    const correctPassword = "NiceYouMadeItToInspectionOrGithubPage";
+    // You can get the encrypted text from here, dont bother
+    const encryptedText = "Hint 1: <a href='https://www.imdb.com/title/tt1677720/' target='_blank'>https://www.imdb.com/title/tt1677720/</a>";
 
     document.querySelectorAll('.file').forEach(file => {
         file.addEventListener('click', () => {
