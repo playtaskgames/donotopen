@@ -6,6 +6,7 @@
     ],
     "routes": [
         { "src": "/api/fetchFollowers", "dest": "/api/fetchFollowers.js" },
+        { "src": "/script.js", "dest": "/script.js" },
         { "src": "/(.*)", "dest": "/public/$1" }
     ]
 }
