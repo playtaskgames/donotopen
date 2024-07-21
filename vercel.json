@@ -1,11 +1,13 @@
 {
     "version": 2,
     "builds": [
-        { "src": "public/**/*", "use": "@vercel/static" },
-        { "src": "api/*.js", "use": "@vercel/node" }
+      { "src": "public/**/*", "use": "@vercel/static" },
+      { "src": "api/*.js", "use": "@vercel/node" }
     ],
     "routes": [
-        { "src": "/api/fetchFollowers", "dest": "/api/fetchFollowers.js" },
-        { "src": "/(.*)", "dest": "/public/$1" }
+      { "src": "/api/fetchFollowers", "dest": "/api/fetchFollowers.js" },
+      { "src": "/api/deauthorize", "dest": "/api/deauthorize.js" },
+      { "src": "/api/data-deletion", "dest": "/api/data-deletion.js" },
+      { "src": "/(.*)", "dest": "/public/$1" }
     ]
-}
+  }
