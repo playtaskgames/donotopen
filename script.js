@@ -31,8 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const passwordSection = document.getElementById("password-section");
 
     const correctPassword = "NiceYouMadeItToInspectionOrGithubPage";
-    // You can get the encrypted text from here, dont bother
-    const encryptedText = "Hint 1: <a href='https://www.imdb.com/title/tt1677720/' target='_blank'>https://www.imdb.com/title/tt1677720/</a>";
+    const encryptedText = "Hint 1 <br> <a href='https://www.imdb.com/title/tt1677720/' target='_blank'>https://www.imdb.com/title/tt1677720/</a>";
 
     document.querySelectorAll('.file').forEach(file => {
         file.addEventListener('click', () => {
@@ -45,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     submitPasswordButton.addEventListener('click', () => {
         if (passwordInput.value === correctPassword) {
-            fileContent.innerText = `Encrypted Content: ${encryptedText}`;
+            fileContent.innerHTML = `${encryptedText} <br> Keep that in mind ;)`;
             passwordSection.style.display = 'none';
         } else {
             fileContent.innerText = "Incorrect password.";
@@ -81,13 +80,13 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
     });
-    // Drag and drop functionality for modal window using interact.js
+
     interact('.modal-content').draggable({
         inertia: true,
         autoScroll: true,
         modifiers: [
             interact.modifiers.restrictRect({
-                restriction: 'parent',  // Restrict within the parent element
+                restriction: 'parent',
                 endOnly: true
             })
         ],
@@ -104,5 +103,63 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
     });
-    
+
+    const followersGoal = 50000;
+    const followersCountElement = document.getElementById("followers-count");
+    const progressBar = document.getElementById("progress-bar");
+
+    const pixelateImage = (img, pixelationFactor) => {
+        const canvas = document.createElement("canvas");
+        const context = canvas.getContext("2d");
+        const originalWidth = img.width;
+        const originalHeight = img.height;
+
+        canvas.width = originalWidth;
+        canvas.height = originalHeight;
+
+        context.drawImage(img, 0, 0, originalWidth, originalHeight);
+
+        if (pixelationFactor !== 0) {
+            for (let y = 0; y < originalHeight; y += pixelationFactor) {
+                for (let x = 0; x < originalWidth; x += pixelationFactor) {
+                    const pixel = context.getImageData(x, y, 1, 1).data;
+                    context.fillStyle = `rgba(${pixel[0]}, ${pixel[1]}, ${pixel[2]}, ${pixel[3]})`;
+                    context.fillRect(x, y, pixelationFactor, pixelationFactor);
+                }
+            }
+        }
+
+        const dataURL = canvas.toDataURL();
+        document.getElementById("background-container").style.backgroundImage = `url(${dataURL})`;
+    };
+
+    const updateUI = (followersCount) => {
+        followersCountElement.textContent = followersCount.toLocaleString();
+        const progressPercentage = (followersCount / followersGoal) * 100;
+        progressBar.style.width = `${progressPercentage}%`;
+
+        const maxPixelSize = 50;
+        const pixelSize = maxPixelSize - (maxPixelSize * (followersCount / followersGoal));
+        const img = new Image();
+        img.src = 'trump.jpg';
+        img.onload = () => pixelateImage(img, Math.max(pixelSize, 1));
+    };
+
+    const fetchFollowerCount = () => {
+        fetch('/api/fetchFollowers')
+            .then(response => response.json())
+            .then(data => {
+                console.log("Follower count fetched:", data.followersCount);
+                updateUI(data.followersCount);
+            })
+            .catch(error => {
+                console.error('Error fetching follower count:', error);
+            });
+    };
+
+    // Fetch initial follower count
+    fetchFollowerCount();
+
+    // Set interval to fetch follower count every minute
+    setInterval(fetchFollowerCount, 60000);
 });
