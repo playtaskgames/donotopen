@@ -1,15 +1,34 @@
-const axios = require('axios');
+const puppeteer = require('puppeteer');
+
+async function getFollowerCount(username) {
+    const browser = await puppeteer.launch({ headless: true });
+    const page = await browser.newPage();
+    
+    await page.goto(`https://www.instagram.com/sparkfieldgame/`, {
+        waitUntil: 'networkidle2'
+    });
+
+    await page.waitForSelector('header section ul li span');
+
+    const followerCount = await page.evaluate(() => {
+        const followerElement = document.querySelector('header section ul li span');
+        return followerElement.getAttribute('title') || followerElement.innerText;
+    });
+
+    await browser.close();
+    return followerCount;
+}
 
 module.exports = async (req, res) => {
-    const accessToken = process.env.INSTAGRAM_ACCESS_TOKEN;
+    const { username } = req.query;
+    if (!username) {
+        return res.status(400).json({ error: 'Username is required' });
+    }
 
     try {
-        const response = await axios.get(`https://graph.instagram.com/me?fields=id,username,followers_count&access_token=${accessToken}`);
-        const followersCount = response.data.followers_count;
-        console.log("Follower count from API:", followersCount); // Logging the fetched follower count
-        res.status(200).json({ followersCount });
+        const followerCount = await getFollowerCount(username);
+        res.status(200).json({ followersCount: followerCount });
     } catch (error) {
-        console.error('Error fetching follower count:', error.response ? error.response.data : error.message);
-        res.status(500).json({ error: 'Failed to fetch follower count' });
+        res.status(500).json({ error: 'Error fetching follower count' });
     }
 };

@@ -6,8 +6,6 @@
     ],
     "routes": [
       { "src": "/api/fetchFollowers", "dest": "/api/fetchFollowers.js" },
-      { "src": "/api/deauthorize", "dest": "/api/deauthorize.js" },
-      { "src": "/api/data-deletion", "dest": "/api/data-deletion.js" },
       { "src": "/(.*)", "dest": "/public/$1" }
     ]
-  }
+}
